@@ -1,0 +1,26 @@
+{
+  "env": {
+    "NODE_ENV": "development",
+    "FM_HOME": "${HOME}/.file-manager",
+    "SKILL_NAME": "file-manager",
+    "SKILL_VERSION": "2.3.0"
+  },
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Glob(**)",
+      "Grep(**)",
+      "Bash(npm:*)",
+      "Bash(node:*)",
+      "Bash(node scripts/ssh-ops.js:*)",
+      "Bash(node scripts/install.js)",
+      "Bash(git:*)",
+      "PowerShell(node -e \"const s=require\\('./scripts/safety'\\); try{s.safeCmd\\('rm -rf /etc'\\)}catch\\(e\\){console.log\\('code:',e.code,'msg:',e.message\\)}\")",
+      "PowerShell($env:FM_HOME = \"C:\\\\Users\\\\dcm\\\\AppData\\\\Local\\\\Temp\\\\fm-e2e-20260701\" ; node scripts/ssh-ops.js doctor 2>&1 | Select-Object -First 15)"
+    ],
+    "deny": [
+      "Bash(rm -rf /*:*)",
+      "Bash(rm -fr /*:*)"
+    ]
+  }
+}
