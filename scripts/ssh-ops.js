@@ -48,7 +48,7 @@ function parseArgs(argv) {
 
 function usage() {
   console.log(`
-文件管理 Skill v2.5
+文件管理 Skill V1.0
 
 基础命令:
   install                    持久化安装 ssh2 到 ~/.file-manager/lib/
@@ -69,7 +69,7 @@ CRUD:
 批量:
   find / grep / batch / stat
 
-共享(v2.5 三层独立授权):
+共享(三层独立授权):
   share add --path ~/test --to lisi
     默认:容器 list(r-x),子项无,future无
   share add --path ~/test --to lisi --level read
@@ -126,7 +126,7 @@ async function doBind(opts) {
   const keyInfo = await keys.ensureKey(opts.serverId);
 
   log('dim', '  [3/5] 注入公钥...');
-  // v2.4: 当向导同意 shareHomeMode,把 Agent home 改为 751,允许其他用户 traverse
+  // 当向导同意 shareHomeMode,把 Agent home 改为 751,允许其他用户 traverse
   const chmodHomePart = opts.shareHomeMode
     ? `chmod 751 /home/${opts.agentUser} && `
     : '';

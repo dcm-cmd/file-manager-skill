@@ -1,30 +1,4 @@
-# 文件共享(ACL) - v2.5 三层独立授权
-
-## v2.5.1 默认值变更
-
-**核心变更:`share add` 不传 `--file-perm` 时,默认给所有现有文件 `r--`(开箱即读)。**
-
-| 维度 | v2.5.0 默认 | v2.5.1 默认 |
-|------|------------|------------|
-| 容器 | `list`(r-x) | `list`(r-x)(不变) |
-| 子项(现有文件) | **无 ACL**(必须 share grant) | **`r--`**(开箱即读) |
-| 未来项 | 无 | 无(不变) |
-| `share grant` perm | 必填 | **不传默认 `read`** |
-| `share grant-dir` perm | 必填 | **不传默认 `read`** |
-
-**关键安全保证**:**没有任何对象给 w 权限** —— lisi 不能 rm/mv/touch/mkdir/echo>>/改任何文件。
-
-**典型用法**:
-```bash
-# 一步分享:lisi 立即可读,不能改
-fm share add --server prod --path ~/test --to lisi
-
-# 让 lisi 写某个文件(显式)
-fm share grant --server prod --path ~/test/a.txt --to lisi --perm readwrite
-
-# 让 lisi 未来也能写新文件
-fm share set-default --server prod --path ~/test --to lisi --perm readwrite
-```
+# 文件共享(ACL) - 三层独立授权
 
 ## 设计理念
 
@@ -69,7 +43,7 @@ Linux 删除/重命名一个文件,实际修改的是**父目录的目录项**,�
 | `readwrite` | `rw-` | 可读可写 |
 | `admin` | `rwx` | 可读可写可执行(配合 chmod +x) |
 
-**v2.5.1 默认行为**:`share add` 不传 `--file-perm` 时,自动给**所有现有文件** `r--`(开箱即可读)。
+**默认行为**:`share add` 不传 `--file-perm` 时,自动给**所有现有文件** `r--`(开箱即可读)。
 
 ### 3. 未来项(default ACL)
 
@@ -208,7 +182,7 @@ fm share list --server prod
 
 ---
 
-## 父目录 traverse 自动授权(v2.4 保留)
+## 父目录 traverse 自动授权
 
 `fm share add` 会自动给目标路径的**所有父目录**加 `u:<grantee>:--x`,使被分享人能穿透 home 链。
 
@@ -257,4 +231,4 @@ fm share add --server prod --path ~/test --to lisi --no-traverse
 1. **共享用户必须存在于服务器**:grantee 必须是合法的 Linux 账号
 2. **不支持组共享**:后续版本通过 `g:<group>:...` 扩展
 3. **不支持 URL 分享**:需要 HTTP 服务
-4. **不支持授权密钥共享**:v2.5 只做 ACL
+4. **不支持授权密钥共享**:当前只做 ACL

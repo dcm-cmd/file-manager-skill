@@ -6,7 +6,7 @@
  * 元数据持久化�?~/.file-manager/shares/<server>.json
  *
  * ====================================================================
- * v2.5.0 重大重构:三层独立授权
+ * 重大重构:三层独立授权
  * ====================================================================
  *
  * �?分享一个目�?拆成三个独立维度,每个维度由分享者显式分�?
@@ -24,7 +24,7 @@
  *   full       = 容器 full + 子项�?readwrite + future readwrite
  *                ⚠️ full 等级需二次确认(CLI: --yes / 需输入 SHARE_FULL)
  *
- * v2.4 保留:父目�?traverse 自动授权
+ * 父目录 traverse 自动授权
  *   跨用户共享时,被分享人需�?home 链每一级目录的 --x 才能穿透�? *   share.add 自动给父链最�?traverse 授权�? *   share.revoke 撤销�?若该层仅为此分享而设,则一并清掉�? */
 
 'use strict';
@@ -111,7 +111,7 @@ function escapePath(p) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 父目�?traverse 处理(v2.4 保留)                                   */
+/* 父目�?traverse 处理                                   */
 /* ------------------------------------------------------------------ */
 
 async function inspectAcl(server, remotePath, user) {
@@ -310,7 +310,7 @@ async function detectType(server, remotePath) {
 /* ------------------------------------------------------------------ */
 
 /**
- * 添加分享(v2.5 核心入口)
+ * 添加分享
  *
  * @param {object} server
  * @param {object} opts {
@@ -380,7 +380,7 @@ async function add(server, opts) {
     );
   }
 
-  // v2.5.1: 默认 filePerm = read(开箱即读)
+  // 默认 filePerm = read(开箱即读)
   const effectiveFilePermMeta = filePerm || 'read';
 
   const record = {
@@ -403,7 +403,7 @@ async function add(server, opts) {
     if (container !== 'none') {
       await applyContainerRecursiveList(server, remotePath, to);
     }
-    // v2.5.1: 用户没传 filePerm/grantAll/pattern 时,默认给所有现有文件 r--(开箱即读)
+    // 用户没传 filePerm/grantAll/pattern 时,默认给所有现有文件 r--(开箱即读)
     const effectiveFilePerm = filePerm || 'read';
     const effectiveGrantAll = (grantAll === undefined) ? true : !!grantAll;
     if (effectiveFilePerm) {
@@ -452,7 +452,7 @@ async function add(server, opts) {
 
 async function grantFile(server, opts) {
   const { path: remotePath, to, perm, pattern, grantAll } = opts;
-  // v2.5.1: 不传 perm 时默认 read(r--)
+  // 不传 perm 时默认 read(r--)
   const effectivePerm = perm || 'read';
   if (!to) throw new Error('GRANTEE_REQUIRED');
   if (!PERM_FILE[effectivePerm]) {
@@ -478,7 +478,7 @@ async function grantFile(server, opts) {
     to
   );
 
-  // v2.5.1: 默认 grantAll=true(单文件/通配符/grant-dir 同理,默认 r-- 覆盖整树)
+  // 默认 grantAll=true(单文件/通配符/grant-dir 同理,默认 r-- 覆盖整树)
   const effectiveGrantAll = (grantAll === undefined) ? true : !!grantAll;
 
   if (pattern) {
@@ -565,7 +565,7 @@ async function grantContainer(server, opts) {
 
 async function grantDir(server, opts) {
   const { path: remotePath, to, perm } = opts;
-  // v2.5.1: 不传 perm 时默认 read(r--)
+  // 不传 perm 时默认 read(r--)
   const effectivePerm = perm || 'read';
   if (!to) throw new Error('GRANTEE_REQUIRED');
   if (!PERM_FILE[effectivePerm]) {
@@ -858,9 +858,9 @@ module.exports = {
   sync, checkAcl,
   // 映射(供测�?
   PERM_FILE, CONTAINER_PERM, LEVEL_PRESET,
-  // v2.4 兼容导出
+  // 兼容导出
   parentChain, ensureTraverseChain, cleanupOrphanTraverse, inspectAcl,
-  // v2.5 工具
+  // 工具
   detectType, applyContainer, applyFile, setDefault,
   applyFilesByPattern, applyAllFiles,
 };

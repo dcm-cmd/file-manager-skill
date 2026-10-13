@@ -72,7 +72,7 @@ async function initWizard() {
     const lockSudo = await questionYesNo(rl, '     禁用 Agent 账号的 sudo?', true);
     const installAcl = await questionYesNo(rl, '[5/6] 安装 ACL 工具(文件共享用)?', true);
 
-    // v2.4: Agent home 改成 751,以便后续把 Agent 文件分享给其他用户无需手动加 traverse
+    // Agent home 改成 751,以便后续把 Agent 文件分享给其他用户无需手动加 traverse
     const shareHomeMode = await questionYesNo(
       rl,
       '[5.5/6] 是否将 Agent home 设为 751 (允许其他用户 traverse,推荐)?',

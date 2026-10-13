@@ -1,4 +1,4 @@
-# 文件管理 Skill v2.3
+# 文件管理 Skill
 
 > 本地文件管理 + 通过 SSH 免密管理 Ubuntu 服务器文件。
 > **完整 MCP 协议支持**,Claude Code / WorkBuddy / QoderWork / KIMIWork 等任意 MCP 客户端可用。
@@ -207,7 +207,7 @@ node scripts/ssh-ops.js share revoke --server prod --path ~/r.pdf --to alice
 node scripts/ssh-ops.js share sync   --server prod
 ```
 
-**v2.4 共享机制**:
+**自动父链 traverse**(跨账号共享):
 
 - `share add` 默认自动扫描目标路径的所有父目录,给 grantee 加最小 `--x`(只 x,不给 r,无侧信道)
 - 已有 traverse 的层(ACL 或 other-mode 自带)跳过,不会重复授权
@@ -287,6 +287,6 @@ sudo apt install acl
 
 ## 版本
 
-- 当前版本:**2.4.0**
+- 当前版本:**1.0.0**
 - 基于:Node.js ≥ 18, ssh2 ≥ 1.17
 - License:MIT

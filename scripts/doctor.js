@@ -1,5 +1,5 @@
 /**
- * doctor.js - 环境自检(需求 v2.3 增强)
+ * doctor.js - 环境自检(7 项检查)
  *
  * 7 项检查:Node / ssh2 / 凭证目录 / servers / keys / ACL / 审计
  */

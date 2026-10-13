@@ -618,7 +618,7 @@ const RESOURCES = [
 
 const server = new Server({
   name: 'file-manager',
-  version: '2.3.0',
+  version: '1.0.0',
 }, {
   capabilities: {
     tools: {},
@@ -670,7 +670,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 
 const transport = new StdioServerTransport();
 server.connect(transport).then(() => {
-  console.error('file-manager MCP server v2.3.0 ready (stdio)');
+  console.error('file-manager MCP server v1.0.0 ready (stdio)');
 }).catch(e => {
   console.error('Failed to start:', e);
   process.exit(1);
